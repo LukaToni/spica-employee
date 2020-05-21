@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { PostData } from '../shared/models/postdata.model'
 
 
 @Component({
@@ -12,14 +13,6 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
     providedIn: 'root'
 })
-
-
-export class PostData {
-    token: string;
-    tokenTimeStamp: string;
-    userId: number;
-    username: string;
-}
 
 export class HomeComponent implements OnInit {
 
@@ -77,9 +70,10 @@ export class HomeComponent implements OnInit {
                 response => {
                     console.log("POST Request is successful ", response);
                     // Save token to local storage
-                    localStorage.setItem('Token', response.body.token);
+                    localStorage.setItem('Token', response.body.Token);
                     // get local token value
-                    // var localToken = localStorage.getItem('Token');
+                    var localToken = localStorage.getItem('Token');
+                    console.log("Local token ", localToken);
                 },
                 error => {
                     console.log("Error", error);
