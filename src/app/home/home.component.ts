@@ -13,6 +13,14 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root'
 })
 
+
+export class PostData {
+    token: string;
+    tokenTimeStamp: string;
+    userId: number;
+    username: string;
+}
+
 export class HomeComponent implements OnInit {
 
     private REST_API_SERVER = "http://rdweb.spica.com:5213/";
@@ -21,10 +29,9 @@ export class HomeComponent implements OnInit {
     private username: string = "";
     private password: string = "";
 
-    private tokenSecure: string = "";
-
     private headers = {};
     private body = JSON.stringify({});
+    public data: PostData;
 
     ngOnInit() { }
 
@@ -60,17 +67,19 @@ export class HomeComponent implements OnInit {
             'Authorization': 'SpicaToken ' + this.authKey
         };
 
-        this.http.post(this.REST_API_SERVER + "timeapi/Session/GetSession",
+        this.http.post<PostData>(this.REST_API_SERVER + "timeapi/Session/GetSession",
             this.body,
             {
                 'headers': this.headers,
                 observe: 'response'
             })
             .subscribe(
-                data => {
-                    console.log("POST Request is successful ", data);
-                    this.tokenSecure = JSON.parse(data.body['Token']);
-                    console.log(this.tokenSecure);
+                response => {
+                    console.log("POST Request is successful ", response);
+                    // Save token to local storage
+                    localStorage.setItem('Token', response.body.token);
+                    // get local token value
+                    // var localToken = localStorage.getItem('Token');
                 },
                 error => {
                     console.log("Error", error);
