@@ -15,4 +15,10 @@ Quick start options:
 4. Run in terminal: ```npm install -g @angular/cli```
 5. Then: ```npm install```
 6. And: ```ng serve```
-7. Navigate to `http://localhost:4200/`
+
+## Development browser
+
+1. Create new shortcut on desktop
+2. In path add: ```"C:\Program Files (x86)\Google\Chrome\Application\chrome.exe" --disable-web-security"```
+3. Add name of shortcut ```DevChrome```
+4. Navigate to `http://localhost:4200/`
