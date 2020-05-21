@@ -69,11 +69,9 @@ export class HomeComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log("POST Request is successful ", response);
-                    // Save token to local storage
+                    // Save token and  auth key to local storage
                     localStorage.setItem('Token', response.body.Token);
-                    // get local token value
-                    var localToken = localStorage.getItem('Token');
-                    console.log("Local token ", localToken);
+                    localStorage.setItem('AuthKey', this.authKey);
                 },
                 error => {
                     console.log("Error", error);
