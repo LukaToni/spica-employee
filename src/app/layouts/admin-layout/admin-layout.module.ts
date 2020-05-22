@@ -10,6 +10,7 @@ import { AdminLayoutRoutes } from './admin-layout.routing';
 
 import { HomeComponent } from '../../home/home.component';
 import { EmployeeComponent } from '../../employee/employee.component';
+import { NewEmployeeComponent } from '../../employee/create/create.component';
 import { PresenceComponent } from '../../presence/presence.component';
 
 
@@ -24,6 +25,7 @@ import { PresenceComponent } from '../../presence/presence.component';
   declarations: [
     HomeComponent,
     EmployeeComponent,
+    NewEmployeeComponent,
     PresenceComponent,
   ]
 })

@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { PostData } from '../shared/models/postdata.model'
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -40,7 +41,10 @@ export class HomeComponent implements OnInit {
         this.authKey = inputText;
     }
 
-    constructor(private http: HttpClient) { }
+    constructor(
+        private http: HttpClient,
+        private router: Router
+    ) { }
 
     // POST for TOKEN
     public sendPostRequest() {
@@ -69,11 +73,10 @@ export class HomeComponent implements OnInit {
             .subscribe(
                 response => {
                     console.log("POST Request is successful ", response);
-                    // Save token to local storage
+                    // Save token and  auth key to local storage
                     localStorage.setItem('Token', response.body.Token);
-                    // get local token value
-                    var localToken = localStorage.getItem('Token');
-                    console.log("Local token ", localToken);
+                    localStorage.setItem('AuthKey', this.authKey);
+                    this.router.navigate(['../employee']);
                 },
                 error => {
                     console.log("Error", error);
