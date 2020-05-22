@@ -7,6 +7,7 @@ import { Employee } from '../shared/models/employee.model';
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.css']
 })
+
 export class EmployeeComponent implements OnInit {
     private REST_API_SERVER = "http://rdweb.spica.com:5213/";
 
@@ -24,6 +25,8 @@ export class EmployeeComponent implements OnInit {
     dataChangedLastName(inputText) {
         this.searchLastName = inputText;
     }
+
+
 
     constructor(private http: HttpClient) { }
 
