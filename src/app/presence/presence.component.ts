@@ -1,32 +1,60 @@
 import { Component, OnInit } from '@angular/core';
-
-declare interface TableData {
-    headerRow: string[];
-    dataRows: string[][];
-}
+import { Employee } from '../shared/models/employee.model';
+import { Time } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: 'app-tables',
+    selector: 'app-tables',
     templateUrl: './presence.component.html',
     styleUrls: ['./presence.component.css']
 })
 export class PresenceComponent implements OnInit {
-  public tableData1: TableData;
 
-  constructor() { }
+    private REST_API_SERVER = "http://rdweb.spica.com:5213/";
 
-  ngOnInit() {
-      this.tableData1 = {
-          headerRow: [ 'ID', 'Name', 'Country', 'City', 'Salary'],
-          dataRows: [
-              ['1', 'Dakota Rice', 'Niger', 'Oud-Turnhout', '$36,738'],
-              ['2', 'Minerva Hooper', 'Curaçao', 'Sinaai-Waas', '$23,789'],
-              ['3', 'Sage Rodriguez', 'Netherlands', 'Baileux', '$56,142'],
-              ['4', 'Philip Chaney', 'Korea, South', 'Overland Park', '$38,735'],
-              ['5', 'Doris Greene', 'Malawi', 'Feldkirchen in Kärnten', '$63,542'],
-              ['6', 'Mason Porter', 'Chile', 'Gloucester', '$78,615']
-          ]
-      };
-  }
+    private headers = {};
+    public listOfEmployee: Employee[];
+
+    private TimeStamp: string = "";
+    public OrgUnitId: number = 10000083;
+
+    dataChangedOrgUnitId(inputText) {
+        this.OrgUnitId = inputText;
+    }
+
+    constructor(private http: HttpClient) { }
+
+    ngOnInit() {
+        this.getPresentEmployee();
+    }
+
+    // GET for SEARCH
+    public getPresentEmployee() {
+        console.log("Send GET request for PRESENT EMPLOYEE");
+
+        // get current date/time
+        this.TimeStamp = new Date().toISOString();
+
+        this.headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            'Authorization': 'SpicaToken ' + localStorage.getItem('AuthKey') + ":" + localStorage.getItem('Token')
+        };
+
+        this.http.get<Employee[]>(this.REST_API_SERVER + "timeapi/presence?TimeStamp=" + this.TimeStamp + "&orgUnitId=" + this.OrgUnitId + "&showInactiveEmployees=false",
+            {
+                'headers': this.headers
+            })
+            .subscribe(
+                response => {
+                    console.log("GET Request is successful ", response);
+                    this.listOfEmployee = response;
+                },
+                error => {
+                    console.log("Error", error);
+                }
+            )
+    }
+
 
 }
