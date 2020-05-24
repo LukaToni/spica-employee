@@ -13,9 +13,6 @@ import { AppComponent } from './app.component';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 
-// Search
-import { Ng2SearchPipeModule } from 'ng2-search-filter';
-
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -26,7 +23,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FooterModule,
     SidebarModule,
     AppRoutingModule,
-    Ng2SearchPipeModule
   ],
   declarations: [
     AppComponent,
